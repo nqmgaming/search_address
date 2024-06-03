@@ -51,7 +51,6 @@ import com.nqmgaming.searchaddresslab.presentation.screen.search.components.Addr
 
 @Composable
 fun SearchScreen(
-    navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: SearchScreenViewModel = hiltViewModel(),
 ) {

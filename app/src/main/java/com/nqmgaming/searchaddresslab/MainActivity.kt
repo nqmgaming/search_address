@@ -93,7 +93,7 @@ class MainActivity : ComponentActivity() {
                                 ) + fadeOut(animationSpec = tween(500))
                             }
                         ) {
-                            SearchScreen(navController = navController)
+                            SearchScreen()
                         }
                     }
                 }

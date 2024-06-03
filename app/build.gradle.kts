@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -22,6 +24,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Get value from local.properties
+        val versionProps = Properties()
+        versionProps.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField("String", "API_KEY", versionProps["API_KEY"].toString())
     }
 
     buildTypes {
@@ -31,6 +39,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -42,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"

@@ -123,7 +123,7 @@ fun AddressItem(
                           * Detail: https://stackoverflow.com/questions/11419407/using-query-string-parameters-with-google-maps-api-v3-services
                            */
 
-                          val uri = "http://maps.google.com/maps?daddr=${position?.lat},${position?.lng}"
+                          val uri = "http://maps.google.com/maps?daddr=${position.lat},${position.lng}"
 
                           // create intent
                           val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
