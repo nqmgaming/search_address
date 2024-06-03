@@ -2,6 +2,10 @@
 
 This project is a simple Android application that allows users to search for addresses. The application contains only one screen, the address search screen. You can view the UI of the application [here](https://giphy.com/gifs/IVf4fSVuOWw0MMLN4L).
 
+## UI 
+
+<img src="./assets/home.png" width="200" height="400" /> <img src="./assets/search-empty.png" width="200" height="400" /> <img src="./assets/search-with-result.png" width="200" height="400" /> <img src="./assets/search-without-result.png" width="200" height="400" /><img src="./assets/google-map.png-more" width="200" height="400" />
+
 ## Features
 
 1. **Address Search (Required)**: Users can search for an address. The application will return a list of addresses that match the search query.
@@ -39,6 +43,9 @@ Replace `"your_api_key_here"` with your actual API key.
 ## Building the Project
 
 To build the project, open it in Android Studio and click on `Build > Make Project`. After the build is successful, you can run the application on an emulator or a real device by clicking on `Run > Run 'app'`.
+
+## Video Demo
+Link: [Search Address Lab](https://share.cleanshot.com/WvhP3wPQ)
 
 ## Contributing
 
