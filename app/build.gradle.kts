@@ -3,9 +3,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-parcelize")
-    kotlin("plugin.serialization")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
 
@@ -84,9 +82,6 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
-    // Coil
-    implementation(libs.coil.compose)
-
     // LiveData
     implementation(libs.androidx.runtime.livedata)
 
@@ -101,18 +96,12 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.work)
 
-    // Serialization
-    implementation(libs.kotlinx.serialization.cbor)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.serialization.json.okio)
-
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
 
-    // Worker
-    implementation(libs.androidx.work.runtime.ktx)
-
     // Lottie
     implementation (libs.lottie.compose)
+
+    implementation ("androidx.work:work-runtime-ktx:2.8.0-alpha01")
 }
