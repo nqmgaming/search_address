@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.nqmgaming.searchaddresslab.presentation.screen.search.components.AddressItem
 
 @Composable
 fun SearchScreen(
@@ -32,9 +33,9 @@ fun SearchScreen(
     val coroutineScope = rememberCoroutineScope()
 
 
-    Column (
+    Column(
         modifier = modifier.fillMaxSize()
-    ){
+    ) {
         TextField(
             value = query,
             onValueChange = {
@@ -44,8 +45,11 @@ fun SearchScreen(
         )
         LazyColumn {
             addresses.items?.let {
-                items(it.size) { address ->
-                    Log.d("SearchScreen", "address: $address")
+                items(it.size) { index ->
+                    val address = it[index].address
+                    AddressItem(
+                        address = address ?: return@items
+                    )
                 }
             }
         }
