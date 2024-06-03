@@ -11,7 +11,12 @@ This project is a simple Android application that allows users to search for add
 
 ## UI 
 
-<img src="./assets/home.png" width="200" height="400" /> <img src="./assets/search-empty.png" width="200" height="400" /> <img src="./assets/search-with-result.png" width="200" height="400" /> <img src="./assets/search-without-result.png" width="200" height="400" /><img src="./assets/google-map.png" width="200" height="400" />
+<img src="./assets/home.png" width="200" height="400" /> 
+<img src="./assets/no-internet-lottie.png" width="200" height="400" />
+<img src="./assets/search-empty.png" width="200" height="400" /> 
+<img src="./assets/search-with-result.png" width="200" height="400" />
+<img src="./assets/search-without-result.png" width="200" height="400" />
+<img src="./assets/google-map.png" width="200" height="400" />
 
 ## Features
 
