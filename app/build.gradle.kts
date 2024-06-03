@@ -78,11 +78,11 @@ dependencies {
     implementation(libs.coil.compose)
 
     // LiveData
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
+    implementation(libs.androidx.runtime.livedata)
 
     // Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
     implementation (libs.logging.interceptor)
 
     // Hilt
@@ -101,5 +101,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     // Worker
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation(libs.androidx.work.runtime.ktx)
+
+    // Lottie
+    implementation (libs.lottie.compose)
 }
