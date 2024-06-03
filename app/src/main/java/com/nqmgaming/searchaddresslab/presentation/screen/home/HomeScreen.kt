@@ -19,6 +19,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,9 +58,11 @@ fun HomeScreen(
             context
         )
 
-    var title = "Permission Request"
+    var title = remember {
+        mutableStateOf("Permission not granted yet!")
+    }
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = title.value) {
         locationPermission.launchPermissionRequest()
 
         if (locationPermission.status.isGranted) {
@@ -67,7 +71,8 @@ fun HomeScreen(
                 if (location != null) {
                     // Logic to handle location object
                     try {
-                        title = "Current latitude: ${location.latitude}, Longitude: ${location.longitude}"
+                        title.value =
+                            "Current latitude: ${location.latitude}, Longitude: ${location.longitude}"
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -133,16 +138,16 @@ fun HomeScreen(
         )
 
         Text(
-            text = title,
+            text = title.value,
             style = TextStyle(
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(
                     alpha = 0.8f
-                ),
-                fontWeight = FontWeight.SemiBold
+                )
             ),
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.padding(top = 8.dp, start = 30.dp, end = 30.dp, bottom = 16.dp),
+            maxLines = 2
         )
     }
 
