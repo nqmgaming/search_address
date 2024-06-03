@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -26,8 +25,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -69,19 +66,14 @@ fun HomeScreen(
 
         TextField(
             value = "",
-            onValueChange = {
-
-            },
+            onValueChange = {},
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "What are you looking for?"
                 )
             },
-            trailingIcon = {
-            },
             shape = RoundedCornerShape(30.dp),
-            singleLine = true,
             placeholder = { Text(text = "Search") },
             modifier = Modifier
                 .fillMaxWidth()
@@ -95,14 +87,8 @@ fun HomeScreen(
                     navController.navigate(Screen.SearchScreen.route)
                 },
             colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                cursorColor = MaterialTheme.colorScheme.onSurface,
                 disabledIndicatorColor = Color.Transparent
-            ),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Search,
-                keyboardType = KeyboardType.Text
             ),
             enabled = false
         )

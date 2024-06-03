@@ -68,10 +68,10 @@ fun SearchScreen(
 
     val networkIsConnected = NetworkUtils.isInternetAvailable(context)
 
-    var isPlaying by remember {
+    val isPlaying by remember {
         mutableStateOf(true)
     }
-    var speed by remember {
+    val speed by remember {
         mutableFloatStateOf(1f)
     }
     val composition by rememberLottieComposition(
@@ -158,7 +158,6 @@ fun SearchScreen(
                         keyboardController?.hide()
                     }
                 ),
-                enabled = networkIsConnected == true
 
             )
             LazyColumn(

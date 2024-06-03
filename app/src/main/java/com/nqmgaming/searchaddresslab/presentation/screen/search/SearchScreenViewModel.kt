@@ -69,7 +69,7 @@ class SearchScreenViewModel @Inject constructor(
 
     private fun onSearch(query: String, apiKey: String) {
         viewModelScope.launch {
-            hereRepository.getGeocode(query, apiKey).collect { result ->
+            hereRepository.getAddresses(query, apiKey).collect { result ->
                 when (result) {
                     is Resources.Loading -> {
                         _state.value = _state.value.copy(

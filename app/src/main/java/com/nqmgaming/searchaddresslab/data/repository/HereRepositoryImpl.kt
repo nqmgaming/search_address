@@ -18,7 +18,7 @@ class HereRepositoryImpl @Inject constructor(
 
     private val TAG = "HereRepositoryImpl"
 
-    override fun getGeocode(
+    override fun getAddresses(
         q: String,
         apiKey: String
     ): Flow<Resources<Response>> {
