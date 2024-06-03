@@ -90,7 +90,7 @@ fun AddressItem(
                 val title = item.title
                 val titleSpanStyle = if (title!!.contains(query, ignoreCase = true)) {
                     SpanStyle(
-                        color = Color.Gray,
+                        color = Color.Black,
                     )
                 } else {
                     SpanStyle()
@@ -151,7 +151,6 @@ fun annotateRecursively(
     var annotatedString = buildAnnotatedString { append(originalText) }
     for (item in placeHolderList) {
         annotatedString = buildAnnotatedString {
-
             append(annotatedString)
             if (originalText.contains(item.first, ignoreCase = true)) {
                 val startIndex = originalText.indexOf(item.first, ignoreCase = true)

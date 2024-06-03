@@ -27,7 +27,7 @@ class SearchScreenViewModel @Inject constructor(
         _state.value = _state.value.copy(query = newQuery)
     }
 
-    fun onEvent(event: SearchScreenEvent) {
+    private fun onEvent(event: SearchScreenEvent) {
         when (event) {
             is SearchScreenEvent.OnSearch -> onSearch(event.query, event.apiKey)
             is SearchScreenEvent.OnSearchError -> onSearchError()
@@ -59,7 +59,7 @@ class SearchScreenViewModel @Inject constructor(
 
     private var searchJob: Job? = null
 
-    fun debounceQuery(scope: CoroutineScope, newQuery: String, delayMillis: Long = 500L) {
+    fun debounceQuery(scope: CoroutineScope, newQuery: String, delayMillis: Long = 1000L) {
         searchJob?.cancel()
         searchJob = scope.launch {
             delay(delayMillis)

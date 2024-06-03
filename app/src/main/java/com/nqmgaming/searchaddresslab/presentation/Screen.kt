@@ -1,4 +1,6 @@
 package com.nqmgaming.searchaddresslab.presentation
 
-class Screen {
+sealed class Screen(val route: String) {
+    data object HomeScreen : Screen("home_screen")
+    data object SearchScreen : Screen("search_screen")
 }
