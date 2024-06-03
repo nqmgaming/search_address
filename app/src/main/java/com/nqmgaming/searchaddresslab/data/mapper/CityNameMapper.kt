@@ -5,7 +5,7 @@ import com.nqmgaming.searchaddresslab.domain.model.CityName as DomainCityName
 
 fun CityName.asDomainCityName(): DomainCityName {
     return DomainCityName(
-        names = names.map { it.asDomainName() },
+        names = names?.map { it.asDomainName() },
         preference = preference
     )
 }

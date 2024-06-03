@@ -12,5 +12,7 @@ data class SearchScreenState(
     val isSearchError: Boolean = false,
     val isSearchSuccess: Boolean = false,
     val isSearchLoading: Boolean = false,
-    val addresses: Response
+    val addresses: Response = Response(
+        items = emptyList()
+    )
 )

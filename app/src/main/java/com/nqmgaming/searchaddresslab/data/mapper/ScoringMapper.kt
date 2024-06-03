@@ -6,6 +6,6 @@ import com.nqmgaming.searchaddresslab.data.remote.dto.Scoring
 fun Scoring.asDomainScoring(): DomainScoring {
     return DomainScoring(
         queryScore = queryScore,
-        fieldScore = fieldScore.asDomainFieldScore()
+        fieldScore = fieldScore?.asDomainFieldScore()
     )
 }
