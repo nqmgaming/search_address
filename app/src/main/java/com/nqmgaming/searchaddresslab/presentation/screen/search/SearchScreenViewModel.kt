@@ -1,5 +1,6 @@
 package com.nqmgaming.searchaddresslab.presentation.screen.search
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,15 +30,32 @@ class SearchScreenViewModel @Inject constructor(
     fun onEvent(event: SearchScreenEvent) {
         when (event) {
             is SearchScreenEvent.OnSearch -> onSearch(event.query, event.apiKey)
-            SearchScreenEvent.OnSearchEmpty -> TODO()
-            SearchScreenEvent.OnSearchError -> TODO()
-            SearchScreenEvent.OnSearchLoading -> TODO()
-            SearchScreenEvent.OnSearchNoInternet -> TODO()
-            SearchScreenEvent.OnSearchNoLocation -> TODO()
-            SearchScreenEvent.OnSearchNoResult -> TODO()
-            SearchScreenEvent.OnSearchSuccess -> TODO()
+            is SearchScreenEvent.OnSearchError -> onSearchError()
+            is SearchScreenEvent.OnSearchLoading -> onSearchLoading()
+            is SearchScreenEvent.OnSearchSuccess -> onSearchSuccess()
         }
     }
+
+
+    private fun onSearchError() {
+        _state.value = _state.value.copy(
+            isSearchError = true
+        )
+    }
+
+    private fun onSearchLoading() {
+        _state.value = _state.value.copy(
+            isLoading = true
+        )
+    }
+
+
+    private fun onSearchSuccess() {
+        _state.value = _state.value.copy(
+            isSearchSuccess = true
+        )
+    }
+
 
     private var searchJob: Job? = null
 
@@ -61,8 +79,10 @@ class SearchScreenViewModel @Inject constructor(
 
                     is Resources.Success -> {
                         _state.value = _state.value.copy(
-                            addresses = result.data ?: Response(items = emptyList())
+                            addresses = result.data ?: Response(items = emptyList()),
+                            isSearchSuccess = true
                         )
+                        Log.d("SearchScreenViewModel", "onSearch: ${result.data}")
                     }
 
                     is Resources.Error -> {

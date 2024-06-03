@@ -10,13 +10,9 @@ fun Response.toDomainResponse(): DomainResponse {
                 address = item.address?.asDomainAddress(),
                 id = item.id,
                 position = item.position?.asDomainPosition(),
-                resultType = item.resultType,
-                scoring = item.scoring?.asDomainScoring(),
                 localityType = item.localityType,
                 mapView = item.mapView?.asDomainMapView(),
-                politicalView = item.politicalView,
                 title = item.title,
-                translations = item.translations?.asDomainTranslations()
             )
         }
     )

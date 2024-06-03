@@ -90,11 +90,11 @@ fun SearchScreen(
 
     )
 
-    if (networkIsConnected == true) {
-
-
+    if (networkIsConnected) {
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize(),
+            horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
         ) {
             TextField(
                 value = query,

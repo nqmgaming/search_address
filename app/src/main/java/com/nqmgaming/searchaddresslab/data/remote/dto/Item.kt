@@ -7,8 +7,6 @@ data class Item(
     val mapView: MapView?,
     val politicalView: String?,
     val position: Position?,
-    val resultType: String?,
-    val scoring: Scoring?,
     val title: String?,
-    val translations: Translations?
+
 )
