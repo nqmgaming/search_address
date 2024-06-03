@@ -58,8 +58,8 @@ Replace `"your_api_key_here"` with your actual API key.
 
 To build the project, open it in Android Studio and click on `Build > Make Project`. After the build is successful, you can run the application on an emulator or a real device by clicking on `Run > Run 'app'`.
 
-
-<img src="./assets/diagram.png"/>
+## Architecture
+<img src="./assets/diagram.png" with="400" height="600"/>
 
 ## Contributing
 
