@@ -18,10 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -29,13 +31,50 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.nqmgaming.searchaddresslab.R
 import com.nqmgaming.searchaddresslab.presentation.Screen
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreen(
     navController: NavController
 ) {
+    // Location permission
+    val locationPermission = rememberPermissionState(
+        android.Manifest.permission.ACCESS_FINE_LOCATION
+    )
+
+    val context = LocalContext.current
+
+    val fusedLocationClient: FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(
+            context
+        )
+
+    var title = "Permission Request"
+
+    LaunchedEffect(key1 = true) {
+        locationPermission.launchPermissionRequest()
+
+        if (locationPermission.status.isGranted) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // Logic to handle location object
+                    try {
+                        title = "Current latitude: ${location.latitude}, Longitude: ${location.longitude}"
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -91,6 +130,19 @@ fun HomeScreen(
                 disabledIndicatorColor = Color.Transparent
             ),
             enabled = false
+        )
+
+        Text(
+            text = title,
+            style = TextStyle(
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(
+                    alpha = 0.8f
+                ),
+                fontWeight = FontWeight.SemiBold
+            ),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = 8.dp)
         )
     }
 
