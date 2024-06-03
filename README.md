@@ -1,6 +1,12 @@
 # Search Address Lab
 
-This project is a simple Android application that allows users to search for addresses. The application contains only one screen, the address search screen. You can view the UI of the application [here](https://giphy.com/gifs/IVf4fSVuOWw0MMLN4L).
+This project is a simple Android application that allows users to search for addresses. The application contains some screens, the address search screen. You can view the main UI of the application [here](https://giphy.com/gifs/IVf4fSVuOWw0MMLN4L).
+
+## Download application from releases to test:
+[Link](https://github.com/nqmgaming/search_address/releases)
+
+## Video Demo
+Link: [Search Address Lab](https://share.cleanshot.com/WvhP3wPQ)
 
 ## Requirements
 - Android Studio latest version
@@ -51,9 +57,6 @@ Replace `"your_api_key_here"` with your actual API key.
 ## Building the Project
 
 To build the project, open it in Android Studio and click on `Build > Make Project`. After the build is successful, you can run the application on an emulator or a real device by clicking on `Run > Run 'app'`.
-
-## Video Demo
-Link: [Search Address Lab](https://share.cleanshot.com/WvhP3wPQ)
 
 ## Contributing
 
