@@ -5,11 +5,6 @@ import com.nqmgaming.searchaddresslab.domain.model.Address as DomainAddress
 
 fun Address.asDomainAddress(): DomainAddress {
     return DomainAddress(
-        city = city,
-        countryCode = countryCode,
-        countryName = countryName,
-        county = county,
-        district = district,
         label = label,
     )
 }
