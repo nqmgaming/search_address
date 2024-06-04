@@ -66,6 +66,10 @@ class SearchScreenViewModel @Inject constructor(
                 delay(delayMillis)
                 onEvent(SearchScreenEvent.OnSearch(newQuery))
             }
+        }else{
+            _state.value = _state.value.copy(
+                addresses = Response(items = emptyList())
+            )
         }
     }
 

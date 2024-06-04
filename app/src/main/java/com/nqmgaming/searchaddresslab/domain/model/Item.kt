@@ -7,4 +7,5 @@ data class Item(
     val mapView: MapView?,
     val position: Position?,
     val title: String?,
+    var distance: Double?,
 )

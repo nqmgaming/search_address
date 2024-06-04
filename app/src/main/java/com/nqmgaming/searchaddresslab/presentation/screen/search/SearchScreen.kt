@@ -1,5 +1,7 @@
 package com.nqmgaming.searchaddresslab.presentation.screen.search
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,7 +25,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,16 +41,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.nqmgaming.searchaddresslab.R
+import com.nqmgaming.searchaddresslab.core.util.CalculateDistance.calculateDistance
 import com.nqmgaming.searchaddresslab.core.util.NetworkUtils
 import com.nqmgaming.searchaddresslab.presentation.screen.search.components.AddressItem
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
@@ -87,6 +99,51 @@ fun SearchScreen(
         restartOnPlay = false
 
     )
+
+    val locationPermission = rememberPermissionState(
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
+
+    val fusedLocationClient: FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(
+            context
+        )
+
+    val lat = remember {
+        mutableDoubleStateOf(0.0)
+    }
+    val lng = remember {
+        mutableDoubleStateOf(0.0)
+    }
+
+    LaunchedEffect(key1 = lat.doubleValue, key2 = lng.doubleValue) {
+        locationPermission.launchPermissionRequest()
+
+        if (locationPermission.status.isGranted) {
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return@LaunchedEffect
+            }
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // Logic to handle location object
+                    try {
+                        lat.doubleValue = location.latitude
+                        lng.doubleValue = location.longitude
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+    }
 
     if (networkIsConnected) {
         Column(
@@ -157,18 +214,30 @@ fun SearchScreen(
                     }
                 ),
 
-            )
+                )
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 8.dp)
             ) {
-                addresses.items?.let {
-                    items(it.size) { index ->
-                        val address = it[index]
+
+                addresses.items?.let { items ->
+                    items.forEach { address ->
+                        address.distance = calculateDistance(
+                            lat1 = lat.doubleValue,
+                            lon1 = lng.doubleValue,
+                            lat2 = address.position?.lat ?: 0.0,
+                            lon2 = address.position?.lng ?: 0.0
+                        )
+                    }
+
+                    val sortedItems = items.sortedBy { address -> address.distance }
+
+                    items(sortedItems.size) { index ->
+                        val address = sortedItems[index]
                         AddressItem(
                             item = address,
-                            query = query
+                            query = query,
                         )
                     }
                 }

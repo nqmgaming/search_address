@@ -13,6 +13,7 @@ fun Response.toDomainResponse(): DomainResponse {
                 localityType = item.localityType,
                 mapView = item.mapView?.asDomainMapView(),
                 title = item.title,
+                distance = item.distance
             )
         }
     )

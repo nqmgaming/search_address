@@ -2,6 +2,7 @@ package com.nqmgaming.searchaddresslab.presentation.screen.search.components
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,20 +28,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.nqmgaming.searchaddresslab.R
+import com.nqmgaming.searchaddresslab.core.util.CalculateDistance
 import com.nqmgaming.searchaddresslab.domain.model.Item
 
 @Composable
 fun AddressItem(
     modifier: Modifier = Modifier,
     item: Item,
-    query: String
+    query: String,
 ) {
     val context = LocalContext.current
+
+    Log.d("Distance", "Distance: ${item.distance}")
+
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -60,23 +67,38 @@ fun AddressItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(32.dp)
-                    .background(
-                        color = Color.Gray.copy(alpha = 0.23f),
-                        shape = CircleShape
-                    )
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Icon(
-                    imageVector = Icons.Default.LocationOn,
-                    contentDescription = "LocationOn",
+                Box(
+                    contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .size(18.dp)
-                        .padding(2.dp),
-                    tint = Color.Black.copy(alpha = 0.8f)
-                )
+                        .size(32.dp)
+                        .background(
+                            color = Color.Gray.copy(alpha = 0.23f),
+                            shape = CircleShape
+                        )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "LocationOn",
+                        modifier = Modifier
+                            .size(18.dp)
+                            .padding(2.dp),
+                        tint = Color.Black.copy(alpha = 0.8f)
+                    )
+                }
+                Text(text = item.position?.let {
+                    item.distance?.let { distance ->
+                        if (distance > 1) {
+                            "%.1f km".format(distance)
+                        } else {
+                            "%.1f m".format(distance * 1000)
+                        }
+                    }
+                } ?: "unknown", style = TextStyle(fontSize = 10.sp))
             }
             Column(
                 modifier = Modifier.weight(1f)
@@ -109,16 +131,18 @@ fun AddressItem(
                     modifier = Modifier.padding(horizontal = 10.dp),
                     overflow = TextOverflow.Ellipsis
                 )
+                if (label.isNotEmpty()) {
+                    Text(
+                        text = annotateRecursively(
+                            placeHolderList = listOf(Pair(query, labelSpanStyle)),
+                            originalText = label
+                        ),
+                        maxLines = 1,
+                        modifier = Modifier.padding(horizontal = 10.dp),
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
 
-                Text(
-                    text = annotateRecursively(
-                        placeHolderList = listOf(Pair(query, labelSpanStyle)),
-                        originalText = label
-                    ),
-                    maxLines = 1,
-                    modifier = Modifier.padding(horizontal = 10.dp),
-                    overflow = TextOverflow.Ellipsis
-                )
             }
             Icon(
                 painter = painterResource(id = R.drawable.ic_right_square),
@@ -127,27 +151,30 @@ fun AddressItem(
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
-                      if (item.position != null){
-                          // create google map intent
-                          val position = item.position
+                        if (item.position != null) {
+                            // create google map intent
+                            val position = item.position
 
-                          /*
-                          * Query the position of the item
-                          * daddr: destination address
-                          * q: query
-                          * mrt: mass rapid transit
-                          * Detail: https://stackoverflow.com/questions/11419407/using-query-string-parameters-with-google-maps-api-v3-services
-                           */
+                            /*
+                            * Query the position of the item
+                            * daddr: destination address
+                            * q: query
+                            * mrt: mass rapid transit
+                            * Detail: https://stackoverflow.com/questions/11419407/using-query-string-parameters-with-google-maps-api-v3-services
+                             */
 
-                          val uri = "http://maps.google.com/maps?daddr=${position.lat},${position.lng}"
+                            val uri =
+                                "http://maps.google.com/maps?daddr=${position.lat},${position.lng}"
 
-                          // create intent
-                          val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-                          intent.setPackage("com.google.android.apps.maps")
-                          context.startActivity(intent)
-                      }else{
-                          Toast.makeText(context, "No position found", Toast.LENGTH_SHORT).show()
-                      }
+                            // create intent
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                            intent.setPackage("com.google.android.apps.maps")
+                            context.startActivity(intent)
+                        } else {
+                            Toast
+                                .makeText(context, "No position found", Toast.LENGTH_SHORT)
+                                .show()
+                        }
 
                     }
                     .background(

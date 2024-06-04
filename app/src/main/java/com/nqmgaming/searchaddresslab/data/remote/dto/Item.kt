@@ -8,5 +8,5 @@ data class Item(
     val politicalView: String?,
     val position: Position?,
     val title: String?,
-
+    val distance: Double?,
 )

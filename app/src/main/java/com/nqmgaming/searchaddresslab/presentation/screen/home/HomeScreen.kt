@@ -1,5 +1,7 @@
 package com.nqmgaming.searchaddresslab.presentation.screen.home
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -32,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -58,7 +61,7 @@ fun HomeScreen(
             context
         )
 
-    var title = remember {
+    val title = remember {
         mutableStateOf("Permission not granted yet!")
     }
 
@@ -66,6 +69,16 @@ fun HomeScreen(
         locationPermission.launchPermissionRequest()
 
         if (locationPermission.status.isGranted) {
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return@LaunchedEffect
+            }
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {

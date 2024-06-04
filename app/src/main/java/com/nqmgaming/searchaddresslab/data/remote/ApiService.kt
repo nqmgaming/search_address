@@ -8,11 +8,12 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("autocomplete")
-    suspend fun getGeocode(
+    @GET("autosuggest")
+    suspend fun getAddresses(
         @Query("q") q: String,
         @Query("apiKey") apiKey: String = API_KEY,
-//        @Query("at") at: String = CURRENT_LOCATION, this is for auto suggest
-//        @Query("in") inCountry: String = COUNTRY_CODE
+        @Query("at") at: String = CURRENT_LOCATION,
+        @Query("in") inCountry: String = COUNTRY_CODE
     ): Response
+
 }

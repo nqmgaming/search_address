@@ -24,7 +24,7 @@ class HereRepositoryImpl @Inject constructor(
         return flow {
             emit(Resources.Loading(true))
             val hereList = try {
-                hereApi.getGeocode(q)
+                hereApi.getAddresses(q)
             } catch (e: IOException) {
                 Log.e(TAG, "Get geocodes: ${e.stackTraceToString()}")
                 emit(Resources.Error("An error occurred while fetching data"))
