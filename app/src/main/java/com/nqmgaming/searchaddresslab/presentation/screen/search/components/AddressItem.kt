@@ -117,6 +117,7 @@ fun AddressItem(
                 val labelSpanStyle = if (label.contains(query, ignoreCase = true)) {
                     SpanStyle(
                         color = Color.Black,
+                        fontSize = 12.sp
                     )
                 } else {
                     SpanStyle()

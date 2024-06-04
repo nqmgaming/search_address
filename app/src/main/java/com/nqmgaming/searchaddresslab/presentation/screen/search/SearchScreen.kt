@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -26,6 +27,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableFloatStateOf
@@ -35,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -75,6 +78,7 @@ fun SearchScreen(
 
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
+    val listState = rememberLazyListState()
 
     val networkIsConnected = NetworkUtils.isInternetAvailable(context)
 
@@ -143,6 +147,12 @@ fun SearchScreen(
                 }
             }
         }
+    }
+
+
+    LaunchedEffect(listState.firstVisibleItemIndex) {
+        // if user scroll then hide keyboard
+        keyboardController?.hide()
     }
 
     if (networkIsConnected) {
@@ -216,6 +226,7 @@ fun SearchScreen(
 
                 )
             LazyColumn(
+                state = listState,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 8.dp)
@@ -233,7 +244,9 @@ fun SearchScreen(
 
                     val sortedItems = items.sortedBy { address -> address.distance }
 
-                    items(sortedItems.size) { index ->
+                    items(sortedItems.size, key = {
+                        sortedItems[it].id ?: it
+                    }) { index ->
                         val address = sortedItems[index]
                         AddressItem(
                             item = address,
@@ -290,7 +303,6 @@ fun SearchScreen(
 
 
             }
-
         }
     } else {
         Column(

@@ -7,4 +7,5 @@ object Constrains {
     const val API_KEY = BuildConfig.API_KEY
     const val CURRENT_LOCATION = "0,0"
     const val COUNTRY_CODE = "countryCode:VNM"
+    const val LIMIT = 10
 }
