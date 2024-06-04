@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -77,7 +78,7 @@ fun AddressItem(
                     modifier = Modifier
                         .size(32.dp)
                         .background(
-                            color = Color.Gray.copy(alpha = 0.23f),
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
                             shape = CircleShape
                         )
                 ) {
@@ -87,7 +88,7 @@ fun AddressItem(
                         modifier = Modifier
                             .size(18.dp)
                             .padding(2.dp),
-                        tint = Color.Black.copy(alpha = 0.8f)
+                        tint = MaterialTheme.colorScheme.secondary
                     )
                 }
                 Text(text = item.position?.let {
@@ -107,7 +108,7 @@ fun AddressItem(
                 val title = item.title
                 val titleSpanStyle = if (title!!.contains(query, ignoreCase = true)) {
                     SpanStyle(
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 } else {
                     SpanStyle()
@@ -116,7 +117,7 @@ fun AddressItem(
                 val label = item.address?.label ?: ""
                 val labelSpanStyle = if (label.contains(query, ignoreCase = true)) {
                     SpanStyle(
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 12.sp
                     )
                 } else {
@@ -148,7 +149,7 @@ fun AddressItem(
             Icon(
                 painter = painterResource(id = R.drawable.ic_right_square),
                 contentDescription = "Turn Right",
-                tint = Color.Black.copy(alpha = 0.5f),
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
