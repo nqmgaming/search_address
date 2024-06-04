@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,14 +17,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -33,10 +29,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.nqmgaming.searchaddresslab.R
-import com.nqmgaming.searchaddresslab.domain.model.Address
 import com.nqmgaming.searchaddresslab.domain.model.Item
 
 @Composable
@@ -95,13 +90,34 @@ fun AddressItem(
                 } else {
                     SpanStyle()
                 }
+
+                val label = item.address?.label ?: ""
+                val labelSpanStyle = if (label.contains(query, ignoreCase = true)) {
+                    SpanStyle(
+                        color = Color.Black,
+                    )
+                } else {
+                    SpanStyle()
+                }
+
                 Text(
                     text = annotateRecursively(
                         placeHolderList = listOf(Pair(query, titleSpanStyle)),
                         originalText = title
                     ),
                     maxLines = 1,
-                    modifier = Modifier.padding(horizontal = 10.dp)
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Text(
+                    text = annotateRecursively(
+                        placeHolderList = listOf(Pair(query, labelSpanStyle)),
+                        originalText = label
+                    ),
+                    maxLines = 1,
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    overflow = TextOverflow.Ellipsis
                 )
             }
             Icon(

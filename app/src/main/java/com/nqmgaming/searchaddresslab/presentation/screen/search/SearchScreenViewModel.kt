@@ -61,9 +61,11 @@ class SearchScreenViewModel @Inject constructor(
 
     fun debounceQuery(scope: CoroutineScope, newQuery: String, delayMillis: Long = 1000L) {
         searchJob?.cancel()
-        searchJob = scope.launch {
-            delay(delayMillis)
-            onEvent(SearchScreenEvent.OnSearch(newQuery))
+        if(newQuery.isNotEmpty()){
+            searchJob = scope.launch {
+                delay(delayMillis)
+                onEvent(SearchScreenEvent.OnSearch(newQuery))
+            }
         }
     }
 

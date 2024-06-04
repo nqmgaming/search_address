@@ -7,5 +7,4 @@ data class Address(
     val county: String?,
     val district: String?,
     val label: String?,
-    val postalCode: String?
 )

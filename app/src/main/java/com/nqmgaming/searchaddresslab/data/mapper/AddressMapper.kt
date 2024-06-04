@@ -11,6 +11,5 @@ fun Address.asDomainAddress(): DomainAddress {
         county = county,
         district = district,
         label = label,
-        postalCode = postalCode
     )
 }
