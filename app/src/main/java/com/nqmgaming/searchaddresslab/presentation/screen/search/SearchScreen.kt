@@ -35,6 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -150,7 +151,7 @@ fun SearchScreen(
     }
 
 
-    LaunchedEffect(listState.firstVisibleItemIndex) {
+    LaunchedEffect(remember { derivedStateOf { listState.firstVisibleItemIndex } }) {
         // if user scroll then hide keyboard
         keyboardController?.hide()
     }
@@ -207,6 +208,10 @@ fun SearchScreen(
                         width = 1.dp,
                         color = Color.Gray.copy(alpha = 0.1f),
                         shape = RoundedCornerShape(30.dp)
+                    )
+                    .shadow(
+                        elevation = 2.dp,
+                        shape = RoundedCornerShape(30.dp)
                     ),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
@@ -223,8 +228,7 @@ fun SearchScreen(
                         keyboardController?.hide()
                     }
                 ),
-
-                )
+            )
             LazyColumn(
                 state = listState,
                 modifier = Modifier
