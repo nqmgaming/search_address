@@ -17,5 +17,4 @@ interface ApiService {
         @Query("in") inCountry: String = COUNTRY_CODE,
         @Query("limit") limit: Int = LIMIT
     ): Response
-
 }

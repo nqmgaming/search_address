@@ -104,7 +104,7 @@ dependencies {
     // Lottie
     implementation (libs.lottie.compose)
 
-    implementation ("androidx.work:work-runtime-ktx:2.8.0-alpha01")
+    implementation (libs.androidx.work.runtime.ktx)
 
-    implementation ("com.google.accompanist:accompanist-permissions:0.34.0")
+    implementation (libs.accompanist.permissions)
 }
