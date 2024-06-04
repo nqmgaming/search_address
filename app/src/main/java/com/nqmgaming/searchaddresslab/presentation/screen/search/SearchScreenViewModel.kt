@@ -29,7 +29,7 @@ class SearchScreenViewModel @Inject constructor(
 
     private fun onEvent(event: SearchScreenEvent) {
         when (event) {
-            is SearchScreenEvent.OnSearch -> onSearch(event.query, event.apiKey)
+            is SearchScreenEvent.OnSearch -> onSearch(event.query)
             is SearchScreenEvent.OnSearchError -> onSearchError()
             is SearchScreenEvent.OnSearchLoading -> onSearchLoading()
             is SearchScreenEvent.OnSearchSuccess -> onSearchSuccess()
@@ -63,13 +63,13 @@ class SearchScreenViewModel @Inject constructor(
         searchJob?.cancel()
         searchJob = scope.launch {
             delay(delayMillis)
-            onEvent(SearchScreenEvent.OnSearch(newQuery, API_KEY))
+            onEvent(SearchScreenEvent.OnSearch(newQuery))
         }
     }
 
-    private fun onSearch(query: String, apiKey: String) {
+    private fun onSearch(query: String) {
         viewModelScope.launch {
-            hereRepository.getAddresses(query, apiKey).collect { result ->
+            hereRepository.getAddresses(query).collect { result ->
                 when (result) {
                     is Resources.Loading -> {
                         _state.value = _state.value.copy(

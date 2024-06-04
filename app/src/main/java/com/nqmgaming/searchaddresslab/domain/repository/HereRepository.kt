@@ -5,5 +5,5 @@ import com.nqmgaming.searchaddresslab.domain.model.Response
 import kotlinx.coroutines.flow.Flow
 
 interface HereRepository {
-    fun getAddresses(q: String, apiKey: String): Flow<Resources<Response>>
+    fun getAddresses(q: String): Flow<Resources<Response>>
 }
