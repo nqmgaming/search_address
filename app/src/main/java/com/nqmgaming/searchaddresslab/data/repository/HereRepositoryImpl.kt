@@ -26,11 +26,11 @@ class HereRepositoryImpl @Inject constructor(
             val hereList = try {
                 hereApi.getAddresses(q)
             } catch (e: IOException) {
-                Log.e(TAG, "Get geocodes: ${e.stackTraceToString()}")
+                Log.e(TAG, "Get addresses: ${e.stackTraceToString()}")
                 emit(Resources.Error("An error occurred while fetching data"))
                 null
             } catch (e: HttpException) {
-                Log.e(TAG, "Get geocodes: ${e.stackTraceToString()}")
+                Log.e(TAG, "Get addresses: ${e.stackTraceToString()}")
                 emit(Resources.Error("An error occurred while fetching data"))
                 null
             }
@@ -40,7 +40,7 @@ class HereRepositoryImpl @Inject constructor(
             }
 
             hereList.let { listing ->
-                println("HereRepositoryImpl: getGeocode: $listing")
+                println("HereRepositoryImpl: get addresses: $listing")
                 emit(
                     Resources.Success(
                         data = listing?.toDomainResponse()
