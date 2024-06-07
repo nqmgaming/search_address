@@ -1,9 +1,9 @@
 package com.nqmgaming.searchaddresslab.data.remote
 
-import com.nqmgaming.searchaddresslab.core.util.Constrains.API_KEY
-import com.nqmgaming.searchaddresslab.core.util.Constrains.COUNTRY_CODE
-import com.nqmgaming.searchaddresslab.core.util.Constrains.CURRENT_LOCATION
-import com.nqmgaming.searchaddresslab.core.util.Constrains.LIMIT
+import com.nqmgaming.searchaddresslab.core.util.Constant.API_KEY
+import com.nqmgaming.searchaddresslab.core.util.Constant.COUNTRY_CODE
+import com.nqmgaming.searchaddresslab.core.util.Constant.CURRENT_LOCATION
+import com.nqmgaming.searchaddresslab.core.util.Constant.LIMIT
 import com.nqmgaming.searchaddresslab.data.remote.dto.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,5 +1,5 @@
 package com.nqmgaming.searchaddresslab.core.di
-import com.nqmgaming.searchaddresslab.core.util.Constrains.BASE_URL
+import com.nqmgaming.searchaddresslab.core.util.Constant.BASE_URL
 import com.nqmgaming.searchaddresslab.data.remote.ApiService
 import dagger.Module
 import dagger.Provides

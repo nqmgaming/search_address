@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nqmgaming.searchaddresslab.core.util.Constrains.API_KEY
 import com.nqmgaming.searchaddresslab.core.util.Resources
 import com.nqmgaming.searchaddresslab.domain.model.Response
 import com.nqmgaming.searchaddresslab.domain.repository.HereRepository
